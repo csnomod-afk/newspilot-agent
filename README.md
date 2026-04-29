@@ -44,8 +44,8 @@ http://localhost:5173
 
 ## Suggested project URL
 
-Use the GitHub Pages URL after deployment, for example:
+Live demo:
 
 ```text
-https://<your-github-username>.github.io/newspilot-agent/
+https://csnomod-afk.github.io/newspilot-agent/
 ```
