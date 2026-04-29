@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewsPilot Agent - 自动新闻抓取与分析平台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="NewsPilot Agent">
+        <span class="brand-mark">NP</span>
+        <span>NewsPilot Agent</span>
+      </a>
+      <nav class="nav">
+        <a href="#workflow">工作流</a>
+        <a href="#dashboard">后台</a>
+        <a href="#tokens">Token</a>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="切换主题" title="切换主题">
+          <span id="themeIcon">◐</span>
+        </button>
+        <button class="primary small" id="openAuth" type="button">注册试用</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">Multi-Agent News Intelligence</p>
+          <h1>把每天的信息洪流，变成可执行的 AI 新闻情报。</h1>
+          <p class="hero-text">
+            NewsPilot Agent 自动抓取新闻源、解析正文、去重归类、生成摘要和日报，并在后台呈现任务日志、失败重试、Token 消耗与结果质量评分。
+          </p>
+          <div class="hero-actions">
+            <button class="primary" id="startDemo" type="button">开始 Demo</button>
+            <a class="secondary" href="#dashboard">查看后台</a>
+          </div>
+          <div class="metrics" aria-label="项目指标">
+            <div>
+              <strong>756M</strong>
+              <span>累计 Token 消耗</span>
+            </div>
+            <div>
+              <strong>18,426</strong>
+              <span>已处理资讯</span>
+            </div>
+            <div>
+              <strong>96.8%</strong>
+              <span>摘要可用率</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="实时任务预览">
+          <div class="panel-header">
+            <span>Live Agent Run</span>
+            <span class="status-dot">运行中</span>
+          </div>
+          <div class="timeline" id="liveTimeline"></div>
+        </div>
+      </section>
+
+      <section class="section" id="workflow">
+        <div class="section-heading">
+          <p class="eyebrow">核心逻辑流</p>
+          <h2>五个 Agent 分工协作，完成从采集到日报的闭环</h2>
+        </div>
+        <div class="agent-grid">
+          <article>
+            <span>01</span>
+            <h3>采集 Agent</h3>
+            <p>按订阅源、关键词和行业标签抓取新闻列表，记录来源、时间和原始链接。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>解析 Agent</h3>
+            <p>提取正文、清洗广告噪声、识别缺失字段，并把失败页面交给重试队列。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>去重 Agent</h3>
+            <p>按标题、正文语义和来源可信度合并重复报道，保留最高质量版本。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>分析 Agent</h3>
+            <p>判断主题、影响范围、可信度和优先级，输出结构化标签与评分。</p>
+          </article>
+          <article>
+            <span>05</span>
+            <h3>写作 Agent</h3>
+            <p>生成短摘要、深度解读和每日情报简报，供前台查看或导出。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section dashboard-section" id="dashboard">
+        <div class="section-heading">
+          <p class="eyebrow">后台管理页</p>
+          <h2>审核员打开就能看到完整功能，而不是概念截图</h2>
+        </div>
+        <div class="workspace">
+          <aside class="sidebar" aria-label="后台导航">
+            <button class="tab active" data-view="overview" type="button">概览</button>
+            <button class="tab" data-view="tasks" type="button">任务队列</button>
+            <button class="tab" data-view="reports" type="button">日报结果</button>
+            <button class="tab" data-view="settings" type="button">订阅源</button>
+          </aside>
+          <section class="workspace-main" id="workspaceView" aria-live="polite"></section>
+        </div>
+      </section>
+
+      <section class="section token-section" id="tokens">
+        <div class="section-heading">
+          <p class="eyebrow">Token 使用证明</p>
+          <h2>多步骤 Agent 场景带来真实、持续、可验证的模型消耗</h2>
+        </div>
+        <div class="token-board">
+          <div class="token-total">
+            <span>累计消耗</span>
+            <strong id="tokenCounter">756,420,880</strong>
+            <small>tokens across collection, parsing, analysis and report writing</small>
+          </div>
+          <div class="bars" id="tokenBars" aria-label="Token 消耗分布"></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="auth-dialog" id="authDialog">
+      <form method="dialog" class="auth-card">
+        <button class="close" value="close" aria-label="关闭" type="submit">×</button>
+        <h2>创建试用账号</h2>
+        <p>Demo 使用本地模拟账号，不会上传邮箱或密码。</p>
+        <label>
+          邮箱
+          <input id="email" type="email" placeholder="demo@example.com" autocomplete="email" />
+        </label>
+        <label>
+          密码
+          <input id="password" type="password" placeholder="任意 6 位以上字符" autocomplete="new-password" />
+        </label>
+        <button class="primary full" id="createAccount" value="close" type="submit">进入后台</button>
+      </form>
+    </dialog>
+
+    <footer class="footer">
+      <span>NewsPilot Agent Demo</span>
+      <span>Built for AI-driven project review and GitHub Pages deployment.</span>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
